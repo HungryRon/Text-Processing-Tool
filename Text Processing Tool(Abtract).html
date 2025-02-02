@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Processing Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        #output {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Text Processing Tool</h1>
+<p>Paste your text into the text box below and click the "Process Text" button.</p>
+
+<textarea id="inputText" placeholder="Paste your text here..."></textarea>
+<button onclick="processText()">Process Text</button>
+
+<div id="output"></div>
+<button onclick="copyProcessedText()">Copy Processed Text</button>
+
+<script>
+    function processText() {
+        // Get the user's input text
+        const inputText = document.getElementById('inputText').value;
+
+        // Split the text into lines
+        const lines = inputText.split('\n');
+
+        // Trim whitespace from each line and filter out empty lines
+        const nonEmptyLines = lines.map(line => line.trim()).filter(line => line.length > 0);
+
+        // Join the processed lines into a single string
+        const processedText = nonEmptyLines.join(' ');
+
+        // Display the processed text
+        document.getElementById('output').textContent = processedText;
+    }
+
+    function copyProcessedText() {
+        // Get the processed text from the output div
+        const processedText = document.getElementById('output').textContent;
+
+        // Use the Clipboard API to copy the text
+        navigator.clipboard.writeText(processedText)
+            .then(() => {
+                alert('Text copied to clipboard!'); // Notify the user
+            })
+            .catch((err) => {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy text. Please try again.'); // Error handling
+            });
+    }
+</script>
+
+</body>
+</html>
